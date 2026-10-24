@@ -27,3 +27,24 @@ app.get('/notes/:id', (req, res) => {
 
     res.status(200).json(foundNote);
 });
+
+
+
+//  PATCH - Update an existing note
+app.patch('/notes/:id', (req, res) => {
+    const note = notes.find(n => String(n.id) === req.params.id);
+
+    if (!note) {
+        return res.status(404).json({ message: "Note not found" });
+    }
+
+    const updates = { ...req.body };
+    delete updates.id; // never allow the id to change
+
+    if (Object.keys(updates).length === 0) {
+        return res.status(400).json({ message: "Provide at least one field to update" });
+    }
+
+    Object.assign(note, updates);
+    res.status(200).json(note);
+});
