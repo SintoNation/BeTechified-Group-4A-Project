@@ -28,8 +28,6 @@ app.get('/notes/:id', (req, res) => {
     res.status(200).json(foundNote);
 });
 
-
-
 //  PATCH - Update an existing note
 app.patch('/notes/:id', (req, res) => {
     const note = notes.find(n => String(n.id) === req.params.id);
@@ -68,4 +66,14 @@ app.delete('/notes/:id', (req, res) => {
     message: 'Note deleted successfully',
     deletedNote,
   });
+});
+
+
+
+
+
+
+
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
 });
