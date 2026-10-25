@@ -48,3 +48,24 @@ app.patch('/notes/:id', (req, res) => {
     Object.assign(note, updates);
     res.status(200).json(note);
 });
+
+// DELETE /notes/:id - Delete a note by its id
+app.delete('/notes/:id', (req, res) => {
+  const { id } = req.params;
+
+  // Find the note's position in the array
+  const index = notes.findIndex((note) => String(note.id) === id);
+
+  // No match: nothing to delete
+  if (index === -1) {
+    return res.status(404).json({ error: 'Note with id ' + id + ' not found' });
+  }
+
+  // Remove the note and keep a copy to show in the response
+  const [deletedNote] = notes.splice(index, 1);
+
+  res.status(200).json({
+    message: 'Note deleted successfully',
+    deletedNote,
+  });
+});
