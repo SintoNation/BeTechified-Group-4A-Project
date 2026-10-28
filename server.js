@@ -11,6 +11,8 @@ const notes = [
   { id: "2", title: "Study Guide", content: "Review Express.js routing today." }
 ];
 
+let notesID = notes.length;
+
 // 1. GET /notes - Retrieve ALL notes
 app.get("/notes", (req, res) => {
   res.status(200).json(notes);
@@ -38,8 +40,10 @@ app.post("/notes", (req, res) => {
     });
   }
 
+  notesID += 1;
+
   const newNote = {
-    id: String(notes.length + 1),
+    id: String(notesID),
     title,
     content
   };
